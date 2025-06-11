@@ -1,33 +1,626 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zupra Solutions - Coming Soon</title>
-  <style>
-    body {
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2rem;
-      color: #94a3b8;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zupra Solutions - Empowering Business Success</title>
+
+  <!-- ✅ Basic SEO -->
+  <meta name="description" content="Zupra Solutions is a leading digital agency offering web development, UI/UX design, app solutions, graphic design, and digital marketing to grow your business online." />
+  <meta name="keywords" content="Zupra Solutions, digital agency, web development, app development, graphic design, SEO, social media management, UI/UX design" />
+  <meta name="author" content="Zupra Solutions" />
+  <link rel="canonical" href="https://zuprasolutions.com/" />
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://zuprasolutions.com/img/favicon.png" />
+  <link rel="apple-touch-icon" href="https://zuprasolutions.com/img/favicon.png" />
+
+  <!-- ✅ Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://zuprasolutions.com/" />
+  <meta property="og:title" content="Zupra Solutions - Empowering Business Success" />
+  <meta property="og:description" content="Professional digital solutions for web, mobile, branding, and marketing. Let's grow your brand online." />
+  <meta property="og:image" content="https://i.ibb.co/xzHtYXM/og-banner.jpg" />
+  <meta name="google-site-verification" content="gwhJAZSWEmPUHChr5ex1xyHUBvUk-_LRaI-wVBHCa4k" />
+
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://zuprasolutions.com/" />
+  <meta name="twitter:title" content="Zupra Solutions - Empowering Business Success" />
+  <meta name="twitter:description" content="Professional digital solutions for web, mobile, branding, and marketing. Let's grow your brand online." />
+  <meta name="twitter:image" content="https://i.ibb.co/xzHtYXM/og-banner.jpg" />
+
+  <!-- ✅ Google Site Verification (Replace with real code) -->
+  <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
+<!-- Google Analytics -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3MFELX8HT2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3MFELX8HT2');
+</script>
+
+  <!-- ✅ Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Zupra Solutions",
+    "url": "https://zuprasolutions.com",
+    "logo": "https://zuprasolutions.com/img/favicon.png",
+    "description": "Zupra Solutions offers web and mobile development, digital marketing, and branding services.",
+    "sameAs": [
+      "https://www.linkedin.com/company/zupra-solutions",
+      "https://www.instagram.com/zuprasolutions"
+    ]
+  }
+  </script>
+
+  <!-- ✅ Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- ✅ Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- ✅ AOS Animation Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+  <!-- ✅ Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <h1>Zupra Solutions</h1>
-  <p>Website coming soon. We build scalable software solutions for modern businesses.</p>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-text">Zupra Solutions</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <i class="fas fa-cube"></i>
+                Zupra Solutions
+            </a>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#process" class="nav-link">Process</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                 <li><a href="blog.html" class="nav-link">blog</a></li>
+            </ul>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="hero-title">
+                        <span class="title-highlight">Empowering</span>
+                        Business Success
+                    </h1>
+                    <p class="hero-subtitle">
+                        At Zupra Solutions, we fuse innovation with expertise to supercharge your growth. 
+                        From dynamic web development to game-changing marketing—we deliver solutions that ignite success.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i>
+                            Let's Build Together
+                        </a>
+                        <a href="#about" class="btn btn-secondary">
+                            <i class="fas fa-play"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="hero-image">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Growth</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Innovation</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-trophy"></i>
+                            <span>Success</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+   <!-- About Section -->
+<section id="about" class="about">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">About Us</h2>
+      <p class="section-subtitle">Crafting Digital Excellence with Impact</p>
+    </div>
+
+    <!-- Grid Content -->
+    <div class="about-grid reversed-layout">
+      <!-- Text Side -->
+        <div class="about-image" data-aos="zoom-in">
+        <img src="/img/team.jpg" alt="Team working" class="about-img" />
+        <div class="experience-badge">
+          <span class="badge-number">5+</span>
+          <span class="badge-text">Years of Excellence</span>
+        </div>
+      </div>
+      <div class="about-info" data-aos="fade-right">
+        <div class="about-section">
+          <h3 class="gradient-heading">Our Mission</h3>
+          <p>At Zupra Solutions, we design experiences that resonate. With over 5 years of expertise, we empower brands through bold creativity and smart technology.</p>
+        </div>
+
+        <div class="about-section">
+          <h3 class="gradient-heading">Our Promise</h3>
+          <p>We’re not here to follow trends—we set them. Let’s co-create the future and make your vision unstoppable.</p>
+        </div>
+
+        <div class="about-stats">
+  <div class="stat-item">
+    <div class="stat-number" data-target="150">0+</div>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="100">0+</div>
+    <div class="stat-label">Happy Clients</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="5">0+</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+</div>
+      <!-- Image Side -->
+     
+    </div>
+  </div>
+</section>
+
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Our Services</h2>
+                <div class="section-subtitle">Comprehensive Digital Solutions</div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="service-title">Web Development</h3>
+                    <p class="service-description">
+                        We build innovative, scalable, and high-performance web products.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">React</span>
+                        <span class="feature-tag">Node.js</span>
+                        <span class="feature-tag">MongoDB</span>
+                    </div>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title">App Development</h3>
+                    <p class="service-description">
+                        Custom mobile and web apps designed for real-world impact.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">iOS</span>
+                        <span class="feature-tag">Android</span>
+                        <span class="feature-tag">Flutter</span>
+                    </div>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="service-title">Web Design</h3>
+                    <p class="service-description">
+                        Visually stunning, user-focused, and responsive designs.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">UI/UX</span>
+                        <span class="feature-tag">Figma</span>
+                        <span class="feature-tag">Responsive</span>
+                    </div>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="service-title">Graphic Design</h3>
+                    <p class="service-description">
+                        Powerful visuals, from branding to UI assets.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">Branding</span>
+                        <span class="feature-tag">Logos</span>
+                        <span class="feature-tag">Print</span>
+                    </div>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">Digital Marketing</h3>
+                    <p class="service-description">
+                        Strategic campaigns that drive leads, traffic, and brand growth.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">SEO</span>
+                        <span class="feature-tag">PPC</span>
+                        <span class="feature-tag">Analytics</span>
+                    </div>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3 class="service-title">Social Media Marketing</h3>
+                    <p class="service-description">
+                        Grow your audience, build engagement, and stay relevant online.
+                    </p>
+                    <div class="service-features">
+                        <span class="feature-tag">Facebook</span>
+                        <span class="feature-tag">Instagram</span>
+                        <span class="feature-tag">LinkedIn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+   <section id="process" class="process">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">Our Process</h2>
+      <div class="section-subtitle">How We Work</div>
+    </div>
+    <div class="process-timeline">
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Research</h3>
+                        <p class="step-description">
+                            Understand goals, audience, and market trends.
+                        </p>
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Develop</h3>
+                        <p class="step-description">
+                            Build tailored, tech-driven solutions.
+                        </p>
+                        <div class="step-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Testing</h3>
+                        <p class="step-description">
+                            Ensure everything works perfectly before launch.
+                        </p>
+                        <div class="step-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Launch</h3>
+                        <p class="step-description">
+                            Deliver results that drive business success.
+                        </p>
+                        <div class="step-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Our Expertise</h2>
+                <div class="section-subtitle">Skills & Capabilities</div>
+            </div>
+            
+            <div class="skills-content">
+                <div class="skills-text" data-aos="fade-right">
+                    <h3>Why Choose Zupra Solutions?</h3>
+                    <p>
+                        Our team combines technical expertise with creative innovation to deliver 
+                        exceptional results. We stay ahead of industry trends and continuously 
+                        improve our skills to provide cutting-edge solutions.
+                    </p>
+                    <ul class="skills-list">
+                        <li><i class="fas fa-check"></i> Expert Team of Professionals</li>
+                        <li><i class="fas fa-check"></i> Latest Technologies & Tools</li>
+                        <li><i class="fas fa-check"></i> Proven Track Record</li>
+                        <li><i class="fas fa-check"></i> 24/7 Support & Maintenance</li>
+                    </ul>
+                </div>
+                
+                <div class="skills-bars" data-aos="fade-left">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Management Skills</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percentage="85"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Professional Skills</span>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percentage="95"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Technical Expertise</span>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percentage="90"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Creative Design</span>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percentage="88"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+   <section id="contact" class="contact">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">Contact Us</h2>
+      <div class="section-subtitle">Let's Start Your Project</div>
+    </div>
+
+    <div class="contact-content">
+      <div class="contact-info" data-aos="fade-right">
+        <h3>Get In Touch</h3>
+        <p>
+          Have a question, project idea, or need a quote? Let's chat and discover
+          what Zupra Solutions can do for you.
+        </p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Email</h4>
+              <a href="mailto:zhyder@zuprasolutions.com">zhyder@zuprasolutions.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Phone</h4>
+              <span>+1 (555) 123-4567</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              <h4>Location</h4>
+              <span>Hope Valley, Derbyshire S32, United Kingdom</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="https://www.instagram.com/zuprasolutions/" class="social-link">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/zupra-solutions/" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="fab fa-facebook"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form-container" data-aos="fade-left">
+        <form
+          class="contact-form"
+          id="contact-form"
+          action="https://formspree.io/f/mjkrwgdl"
+          method="POST"
+        >
+          <div class="form-group">
+            <input type="text" id="name" name="name" required />
+            <label for="name">Your Name</label>
+          </div>
+
+          <div class="form-group">
+            <input type="email" id="email" name="email" required />
+            <label for="email">Your Email</label>
+          </div>
+
+          <div class="form-group">
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select a Service</option>
+              <option value="web-development">Web Development</option>
+              <option value="app-development">App Development</option>
+              <option value="web-design">Web Design</option>
+              <option value="graphic-design">Graphic Design</option>
+              <option value="digital-marketing">Digital Marketing</option>
+              <option value="social-media">Social Media Marketing</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <label for="message">Your Message</label>
+          </div>
+
+          <!-- Anti-spam field -->
+          <input type="text" name="_honey" style="display:none" />
+
+          <!-- Redirect after success -->
+          <input type="hidden" name="_next" value="https://zuprasolutions.com/thankyou.html" />
+
+          <button type="submit" class="btn btn-primary btn-full">
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-cube"></i>
+                        Zupra Solutions
+                    </div>
+                    <p>Empowering businesses with innovative digital solutions.</p>
+                </div>
+                
+                <div class="footer-nav">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-services">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Web Development</a></li>
+                        <li><a href="#services">App Development</a></li>
+                        <li><a href="#services">Digital Marketing</a></li>
+                        <li><a href="#services">Graphic Design</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>zhyder@zuprasolutions.com</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/zuprasolutions/
+"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/zupra-solutions/"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Zupra Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
