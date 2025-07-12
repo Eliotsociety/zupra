@@ -207,3 +207,88 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+   let currentSlide = 0;
+        const slides = document.querySelectorAll('.pricing-card');
+        const totalSlides = slides.length;
+        const slidesContainer = document.getElementById('slidesContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlider() {
+            // Only apply transform on mobile/tablet
+            if (window.innerWidth < 1024) {
+                slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            // Update button states
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlider();
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToSlide(index));
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                slidesContainer.style.transform = 'none';
+            } else {
+                updateSlider();
+            }
+        });
+
+        // Auto-slide functionality (optional)
+        setInterval(() => {
+            if (window.innerWidth < 1024) {
+                if (currentSlide < totalSlides - 1) {
+                    nextSlide();
+                } else {
+                    currentSlide = 0;
+                    updateSlider();
+                }
+            }
+        }, 5000); // Change slide every 5 seconds
+
+        // Initialize
+        updateSlider();
+
+        // Add click handlers to CTA buttons
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
+                console.log(`Selected plan: ${planName}`);
+                // Add your form submission or redirect logic here
+                alert(`You selected the ${planName} plan! Redirecting to contact form...`);
+            });
+        });
