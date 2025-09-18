@@ -93,17 +93,99 @@ src="https://www.facebook.com/tr?id=750196307446068&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
   
-</head>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Geomanist:wght@700&display=swap');
+
+  .gsap-intro {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    font-weight: bold;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .loading-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: #256c48;
+    z-index: -1;
+  }
+
+  .gsap-text {
+    color: #fff;
+    position: absolute;
+    opacity: 0;
+    font-family: 'Luckiest Guy', cursive;
+  }
+
+  #main-content {
+    padding: 2rem;
+    text-align: center;
+    opacity: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 📱 Small devices (phones) */
+  @media (max-width: 480px) {
+    .gsap-intro {
+      font-size: 2rem;
+      padding: 1rem;
+    }
+    #main-content {
+      padding: 1rem;
+    }
+  }
+
+  /* 📱📲 Medium devices (large phones / tablets portrait) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .gsap-intro {
+      font-size: 3rem;
+    }
+    #main-content {
+      padding: 1.5rem;
+    }
+  }
+
+  /* 💻 Tablets landscape / small laptops */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .gsap-intro {
+      font-size: 4rem;
+    }
+  }
+
+  /* 🖥️ Large desktops */
+  @media (min-width: 1440px) {
+    .gsap-intro {
+      font-size: 6rem;
+    }
+  }
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+ </head>
 
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-text">Zupra Solutions</div>
-        </div>
-    </div>
+    <!-- Loading Screen You Copy Cat -->
+    <div class="gsap-intro">
+    <div class="loading-bar"></div>
+    <p class="gsap-text"></p>
+  </div>
 
+  
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -166,9 +248,11 @@ Hero Section -->
             <div class="hero-content">
                 <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
                     <h1 class="hero-title">
+                        
                         <span class="title-highlight">Empowering</span>
                         Business Success
                     </h1>
+                    
                     <p class="hero-subtitle">
                         At Zupra Solutions, we fuse innovation with expertise to supercharge your growth. 
                         From dynamic web development to game-changing marketing—we deliver solutions that ignite success.
@@ -1040,6 +1124,54 @@ Hero Section -->
             new PricingSlider();
         });
     </script>
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let words = ["Welcome!", "Designs", "Developement", "SEO", "Digital", "Marketing", "Content"," Creation", "Ai Bots",  "Your"," All in One"," Solution", "Zupra Solutions :)"];
+      let textElement = document.querySelector(".gsap-text");
+      let loadingBar = document.querySelector(".loading-bar");
+      let mainContent = document.getElementById("main-content");
+
+      let masterTl = gsap.timeline({ defaults: { duration: 0.5, ease: "power2.inOut" } });
+
+      masterTl.to(loadingBar, {
+        width: "100%",
+        duration: 7,
+        onUpdate: function () {
+          let progress = loadingBar.offsetWidth / window.innerWidth;
+          textElement.style.color = progress > 0.4 ? " #FFFFFF" : "#256c48";
+        }
+      });
+
+      words.forEach((word, index) => {
+        masterTl.to(textElement, {
+          duration: 0.5,
+          opacity: 1,
+          text: word,
+          onStart: () => {
+            textElement.innerText = word;
+          }
+        }, index * 0.5);
+
+        masterTl.to(textElement, {
+          duration: 0.5,
+          opacity: 0,
+        }, (index * 0.5) + 0.4);
+      });
+
+      masterTl.to(".gsap-intro", {
+        y: "-100vh",
+        duration: 1,
+        ease: "cubic-bezier(0.76, 0, 0.24, 1)",
+      }, "-=0.5");
+
+      masterTl.to(mainContent, {
+        opacity: 1,
+        duration: 2,
+        ease: "power2.out",
+      }, "<");
+    });
+  </script>
     <script>
   document.addEventListener("DOMContentLoaded", () => {
     const slider = document.querySelector('.slides-container');
