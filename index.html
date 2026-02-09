@@ -1175,51 +1175,6 @@ Hero Section -->
       }, "<");
     });
   </script>
-    <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const slider = document.querySelector('.slides-container');
-    const cards = document.querySelectorAll('.pricing-card');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    let currentIndex = 0;
-    const cardsPerView = 3;
-
-    const totalSlides = cards.length;
-    const totalGroups = Math.ceil(totalSlides / cardsPerView);
-
-    const updateSliderPosition = () => {
-      const cardWidth = cards[0].offsetWidth + 32; // 32px = gap (16px each side)
-      slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-
-      // Disable buttons when at start or end
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= totalSlides - cardsPerView;
-    };
-
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < totalSlides - cardsPerView) {
-        currentIndex++;
-        updateSliderPosition();
-      }
-    });
-
-    prevBtn.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateSliderPosition();
-      }
-    });
-
-    // Responsive reset on window resize
-    window.addEventListener("resize", () => {
-      updateSliderPosition();
-    });
-
-    updateSliderPosition(); // Initial load
-  });
-</script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="script.js"></script>
   <script src="//code.tidio.co/odecgpmjlnyn7tmygf12pp4uy1bsmfbb.js" async></script>
