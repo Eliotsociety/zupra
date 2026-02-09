@@ -11,9 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- LOADING SCREEN ---
   const loadingScreen = document.getElementById('loading-screen');
-  window.addEventListener('load', () => {
-    loadingScreen.classList.add('hidden');
-  });
+  if (loadingScreen) {
+    window.addEventListener('load', () => {
+      loadingScreen.classList.add('hidden');
+    });
+  }
 
   // --- NAVBAR SCROLL & ACTIVE LINK ---
   const navbar = document.getElementById('navbar');
@@ -172,25 +174,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // Example – track contact button click
-document.querySelector('.contact-btn').addEventListener('click', () => {
-  gtag('event', 'contact_click', { 'event_category': 'CTA', 'event_label': 'Contact Button Homepage' });
-});
-
-document.querySelector('.contact-btn').addEventListener('click', () => {
-  gtag('event', 'click', {
-    event_category: 'CTA',
-    event_label: 'Contact Button'
+const contactBtn = document.querySelector('.contact-btn');
+if (contactBtn) {
+  contactBtn.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'contact_click', { 'event_category': 'CTA', 'event_label': 'Contact Button Homepage' });
+      gtag('event', 'click', { 'event_category': 'CTA', 'event_label': 'Contact Button' });
+    }
   });
-});
+}
 
-document.querySelector('#contact-form').addEventListener('submit', () => {
-  gtag('event', 'submit', {
-    event_category: 'Form',
-    event_label: 'Contact Form',
-    value: 1
-  });
-});
 document.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.querySelector('#contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (typeof gtag === 'function') {
+        gtag('event', 'submit', { 'event_category': 'Form', 'event_label': 'Contact Form', 'value': 1 });
+      }
+
+      const formData = new FormData(contactForm);
+      
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = 'thankyou.html';
+        } else {
+          alert("Oops! There was a problem submitting your form");
+        }
+      }).catch(error => {
+        alert("Oops! There was a problem submitting your form");
+      });
+    });
+  }
+
   const hamburger = document.getElementById("hamburger");
   const navMenu = document.getElementById("nav-menu");
   const navLinks = document.querySelectorAll(".nav-link");
@@ -212,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const slides = document.querySelectorAll('.pricing-card');
         const totalSlides = slides.length;
         const slidesContainer = document.getElementById('slidesContainer');
+        if (slidesContainer) {
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const dots = document.querySelectorAll('.dot');
@@ -282,6 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Initialize
         updateSlider();
+        }
 
         // Add click handlers to CTA buttons
         document.querySelectorAll('.cta-button').forEach(button => {
