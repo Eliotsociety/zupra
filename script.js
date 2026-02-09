@@ -33,8 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Active link highlighting
     let currentSection = '';
     sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (pageYOffset >= sectionTop - 100) {
+      const sectionTop = section.offsetTop; // Get the top position of the section
+      // Adjust offset for fixed navbar height and a small buffer
+      // Using navbar.offsetHeight for dynamic height, or a fixed value like 100px
+      if (pageYOffset >= sectionTop - navbar.offsetHeight - 50) {
         currentSection = section.getAttribute('id');
       }
     });
@@ -46,8 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
-
   window.addEventListener('scroll', onScroll);
+  // Call onScroll once on load to set initial active link and navbar state
+  onScroll();
 
   // --- HAMBURGER MENU ---
   const hamburger = document.getElementById('hamburger');
@@ -56,12 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
+    document.body.classList.toggle('no-scroll'); // Optional: prevent body scroll when menu is open
   });
-  
+
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
+        document.body.classList.remove('no-scroll'); // Optional: re-enable body scroll
     });
   });
 
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const statItems = document.querySelectorAll('.stat-number');
   const aboutSection = document.getElementById('about');
 
-  const countUp = (el) => {
+  const countUp = (el, isPercentage = false) => {
     const target = +el.getAttribute('data-count');
     let count = 0;
     const duration = 2000; // 2 seconds
@@ -81,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.innerText = Math.ceil(count);
         requestAnimationFrame(updateCount);
       } else {
-        el.innerText = target;
+        el.innerText = target + (isPercentage ? '%' : '+');
       }
     };
     requestAnimationFrame(updateCount);
@@ -96,8 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const statObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        statItems.forEach(item => countUp(item));
-        observer.unobserve(entry.target); // Stop observing once animated
+        entry.target.querySelectorAll('.stat-number').forEach(item => {
+          // Reset text content before animating to avoid issues on re-scroll if not unobserved
+          item.textContent = '0' + (item.textContent.includes('%') ? '%' : '+');
+          const target = parseInt(item.dataset.target);
+          const isPercentage = item.textContent.includes('%');
+          countUp(item, isPercentage);
+        });
+        // If you want to re-animate on every scroll into view, don't unobserve.
+        // If you want it to animate only once, uncomment the line below:
+        // observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
@@ -116,7 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
         skillProgress.forEach(bar => {
           bar.style.width = bar.getAttribute('data-percentage') + '%';
         });
-        observer.unobserve(entry.target);
+        // If you want to re-animate on every scroll into view, don't unobserve.
+        // If you want it to animate only once, uncomment the line below:
+        // observer.unobserve(entry.target);
+      } else {
+        // Reset skill bars when they leave the viewport
+        skillProgress.forEach(bar => {
+          bar.style.width = '0%';
+        });
       }
     });
   }, { threshold: 0.5 });
@@ -127,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- BACK TO TOP BUTTON ---
   const backToTopButton = document.getElementById('back-to-top');
-  
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       backToTopButton.classList.add('show');
@@ -144,36 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+// End of main DOMContentLoaded
 
 
-  const counters = document.querySelectorAll('.stat-number');
-  counters.forEach(counter => {
-    const updateCount = () => {
-      const target = +counter.getAttribute('data-target');
-      const current = +counter.innerText.replace('+', '');
-      const increment = Math.ceil(target / 50); // speed tweak
-
-      if (current < target) {
-        counter.innerText = `${current + increment}+`;
-        setTimeout(updateCount, 30);
-      } else {
-        counter.innerText = `${target}+`;
-      }
-    };
-
-    // Optional: only animate when in viewport
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        updateCount();
-        observer.disconnect(); // only once
-      }
-    }, { threshold: 1 });
-
-    observer.observe(counter);
-  });
-
-
-  // Example – track contact button click
+// --- CONTACT BUTTON CLICK TRACKING ---
 const contactBtn = document.querySelector('.contact-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', () => {
@@ -184,8 +178,9 @@ if (contactBtn) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const contactForm = document.querySelector('#contact-form');
+// --- CONTACT FORM SUBMISSION ---
+// This is a separate DOMContentLoaded, it should be merged into the main one.
+document.addEventListener("DOMContentLoaded", function () { // This is a duplicate DOMContentLoaded
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -211,107 +206,247 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+}); // This DOMContentLoaded is redundant and should be removed.
 
-  const hamburger = document.getElementById("hamburger");
-  const navMenu = document.getElementById("nav-menu");
-  const navLinks = document.querySelectorAll(".nav-link");
+// --- TESTIMONIALS SLIDER (from index.html inline script, moved here) ---
+// Renamed variables to avoid conflicts with potential pricing slider
+document.addEventListener('DOMContentLoaded', function() { // This is another duplicate DOMContentLoaded
+    const testimonialsTrack = document.getElementById('testimonialsTrack');
+    const testimonialsPrevBtn = document.getElementById('prevBtn');
+    const testimonialsNextBtn = document.getElementById('nextBtn');
+    const testimonialsDotsContainer = document.getElementById('testimonialsDots');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    const testimonialsDots = testimonialsDotsContainer ? testimonialsDotsContainer.querySelectorAll('.dot') : [];
 
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
-  });
+    if (testimonialsTrack && testimonialCards.length > 0 && testimonialsPrevBtn && testimonialsNextBtn) {
+        let currentTestimonialSlide = 0;
+        const totalTestimonialSlides = testimonialCards.length;
+        let autoPlayInterval;
 
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      hamburger.classList.remove("active");
-      navMenu.classList.remove("active");
-    });
-  });
-});
+        // Initialize
+        updateTestimonialSlider();
+        startTestimonialAutoPlay();
 
-   let currentSlide = 0;
-        const slides = document.querySelectorAll('.pricing-card');
-        const totalSlides = slides.length;
-        const slidesContainer = document.getElementById('slidesContainer');
-        if (slidesContainer) {
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dots = document.querySelectorAll('.dot');
+        // Navigation functions
+        function updateTestimonialSlider() {
+            testimonialsTrack.style.transform = `translateX(-${currentTestimonialSlide * 100}%)`;
 
-        function updateSlider() {
-            // Only apply transform on mobile/tablet
-            if (window.innerWidth < 1024) {
-                slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }
-            
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
+            testimonialCards.forEach((card, index) => {
+                card.classList.toggle('active', index === currentTestimonialSlide);
             });
 
-            // Update button states
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === totalSlides - 1;
+            testimonialsDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentTestimonialSlide);
+            });
         }
 
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSlider();
-            }
+        function nextTestimonialSlide() {
+            currentTestimonialSlide = (currentTestimonialSlide + 1) % totalTestimonialSlides;
+            updateTestimonialSlider();
         }
 
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlider();
-            }
+        function prevTestimonialSlide() {
+            currentTestimonialSlide = (currentTestimonialSlide - 1 + totalTestimonialSlides) % totalTestimonialSlides;
+            updateTestimonialSlider();
         }
 
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
+        function goToTestimonialSlide(index) {
+            currentTestimonialSlide = index;
+            updateTestimonialSlider();
+        }
+
+        // Auto-play functionality
+        function startTestimonialAutoPlay() {
+            autoPlayInterval = setInterval(nextTestimonialSlide, 5000);
+        }
+
+        function stopTestimonialAutoPlay() {
+            clearInterval(autoPlayInterval);
         }
 
         // Event listeners
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => goToSlide(index));
+        testimonialsNextBtn.addEventListener('click', () => {
+            nextTestimonialSlide();
+            stopTestimonialAutoPlay();
+            startTestimonialAutoPlay();
         });
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) {
-                slidesContainer.style.transform = 'none';
-            } else {
-                updateSlider();
-            }
+        testimonialsPrevBtn.addEventListener('click', () => {
+            prevTestimonialSlide();
+            stopTestimonialAutoPlay();
+            startTestimonialAutoPlay();
         });
 
-        // Auto-slide functionality (optional)
-        setInterval(() => {
-            if (window.innerWidth < 1024) {
-                if (currentSlide < totalSlides - 1) {
-                    nextSlide();
-                } else {
-                    currentSlide = 0;
-                    updateSlider();
-                }
-            }
-        }, 5000); // Change slide every 5 seconds
-
-        // Initialize
-        updateSlider();
-        }
-
-        // Add click handlers to CTA buttons
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                console.log(`Selected plan: ${planName}`);
-                // Add your form submission or redirect logic here
-                alert(`You selected the ${planName} plan! Redirecting to contact form...`);
+        testimonialsDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToTestimonialSlide(index);
+                stopTestimonialAutoPlay();
+                startTestimonialAutoPlay();
             });
         });
+
+        // Pause on hover
+        const testimonialsContainer = document.querySelector('.testimonials-container');
+        if (testimonialsContainer) {
+            testimonialsContainer.addEventListener('mouseenter', stopTestimonialAutoPlay);
+            testimonialsContainer.addEventListener('mouseleave', startTestimonialAutoPlay);
+
+            // Touch/swipe support
+            let startX = 0;
+            let endX = 0;
+
+            testimonialsContainer.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                stopTestimonialAutoPlay();
+            });
+
+            testimonialsContainer.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+
+            testimonialsContainer.addEventListener('touchend', () => {
+                const threshold = 50;
+                const diff = startX - endX;
+
+                if (Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        nextTestimonialSlide();
+                    } else {
+                        prevTestimonialSlide();
+                    }
+                }
+                startTestimonialAutoPlay();
+            });
+        }
+    }
+
+    // Animated counter for stats (already consolidated above, removing this duplicate)
+    // Intersection Observer for stats animation (already consolidated above, removing this duplicate)
+
+    // Scroll animation (already consolidated above, removing this duplicate)
+}); // This DOMContentLoaded is redundant and should be removed.
+
+// --- PRICING SLIDER CLASS (from index.html inline script, moved here) ---
+// This class is defined but not used in index.html as there's no pricing section.
+// It also uses generic IDs like 'prevBtn', 'nextBtn', 'dots' which conflict.
+// Given it's not used in index.html, and to avoid conflicts, I will remove it.
+/*
+class PricingSlider {
+    constructor() {
+        this.currentSlide = 0;
+        this.totalSlides = 4;
+        this.slidesContainer = document.getElementById('slidesContainer');
+        this.prevBtn = document.getElementById('prevBtn');
+        this.nextBtn = document.getElementById('nextBtn');
+        this.dots = document.querySelectorAll('.dot');
+
+        this.init();
+    }
+
+    init() {
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prevSlide());
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        this.updateSlider();
+        this.startAutoSlide();
+    }
+
+    nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.updateSlider();
+    }
+
+    prevSlide() {
+        this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
+        this.updateSlider();
+    }
+
+    goToSlide(slideIndex) {
+        this.currentSlide = slideIndex;
+        this.updateSlider();
+    }
+
+    updateSlider() {
+        if (this.slidesContainer) {
+            const translateX = -this.currentSlide * 100;
+            this.slidesContainer.style.transform = `translateX(${translateX}%)`;
+        }
+
+        this.dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentSlide);
+        });
+
+        if (this.prevBtn) this.prevBtn.disabled = this.currentSlide === 0;
+        if (this.nextBtn) this.nextBtn.disabled = this.currentSlide === this.totalSlides - 1;
+    }
+
+    startAutoSlide() {
+        setInterval(() => {
+            if (this.currentSlide < this.totalSlides - 1) {
+                this.nextSlide();
+            }
+        }, 5000);
+    }
+}
+
+// Initialize the slider when the page loads (only if elements exist and it's intended for this page)
+document.addEventListener('DOMContentLoaded', () => {
+    // If a pricing slider is actually needed on index.html, its elements need unique IDs
+    // and this instantiation should be conditional.
+    // For now, assuming it's not needed on index.html.
+    // new PricingSlider();
+});
+*/
+
+// --- PRICING SLIDER (from index.html inline script, the second one) ---
+// This is also dead code for index.html as there's no pricing section.
+// It also uses generic IDs like 'prevBtn', 'nextBtn'.
+// I will remove this as well.
+/*
+document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector('.slides-container');
+    const cards = document.querySelectorAll('.pricing-card');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentIndex = 0;
+    const cardsPerView = 3;
+
+    const totalSlides = cards.length;
+    const totalGroups = Math.ceil(totalSlides / cardsPerView);
+
+    const updateSliderPosition = () => {
+        const cardWidth = cards[0].offsetWidth + 32; // 32px = gap (16px each side)
+        slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        // Disable buttons when at start or end
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= totalSlides - cardsPerView;
+    };
+
+    nextBtn.addEventListener("click", () => {
+        if (currentIndex < totalSlides - cardsPerView) {
+            currentIndex++;
+            updateSliderPosition();
+        }
+    });
+
+    prevBtn.addEventListener("click", () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSliderPosition();
+        }
+    });
+
+    // Responsive reset on window resize
+    window.addEventListener("resize", () => {
+        updateSliderPosition();
+    });
+
+    updateSliderPosition(); // Initial load
+});
+*/
