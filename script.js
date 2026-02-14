@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
   });
-  
+
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
     });
   });
 
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     requestAnimationFrame(updateCount);
   };
-  
+
   const observerOptions = {
     root: null,
     rootMargin: '0px',
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  if(aboutSection) {
+  if (aboutSection) {
     statObserver.observe(aboutSection);
   }
 
@@ -120,14 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.5 });
-  
-  if(skillsSection) {
+
+  if (skillsSection) {
     skillObserver.observe(skillsSection);
   }
 
   // --- BACK TO TOP BUTTON ---
   const backToTopButton = document.getElementById('back-to-top');
-  
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       backToTopButton.classList.add('show');
@@ -146,34 +146,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-  const counters = document.querySelectorAll('.stat-number');
-  counters.forEach(counter => {
-    const updateCount = () => {
-      const target = +counter.getAttribute('data-target');
-      const current = +counter.innerText.replace('+', '');
-      const increment = Math.ceil(target / 50); // speed tweak
+const counters = document.querySelectorAll('.stat-number');
+counters.forEach(counter => {
+  const updateCount = () => {
+    const target = +counter.getAttribute('data-target');
+    const current = +counter.innerText.replace('+', '');
+    const increment = Math.ceil(target / 50); // speed tweak
 
-      if (current < target) {
-        counter.innerText = `${current + increment}+`;
-        setTimeout(updateCount, 30);
-      } else {
-        counter.innerText = `${target}+`;
-      }
-    };
+    if (current < target) {
+      counter.innerText = `${current + increment}+`;
+      setTimeout(updateCount, 30);
+    } else {
+      counter.innerText = `${target}+`;
+    }
+  };
 
-    // Optional: only animate when in viewport
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        updateCount();
-        observer.disconnect(); // only once
-      }
-    }, { threshold: 1 });
+  // Optional: only animate when in viewport
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      updateCount();
+      observer.disconnect(); // only once
+    }
+  }, { threshold: 1 });
 
-    observer.observe(counter);
-  });
+  observer.observe(counter);
+});
 
 
-  // Example – track contact button click
+// Example – track contact button click
 const contactBtn = document.querySelector('.contact-btn');
 if (contactBtn) {
   contactBtn.addEventListener('click', () => {
@@ -185,17 +185,18 @@ if (contactBtn) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Contact Form Handling
   const contactForm = document.querySelector('#contact-form');
   if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      
+
       if (typeof gtag === 'function') {
         gtag('event', 'submit', { 'event_category': 'Form', 'event_label': 'Contact Form', 'value': 1 });
       }
 
       const formData = new FormData(contactForm);
-      
+
       fetch(contactForm.action, {
         method: 'POST',
         body: formData,
@@ -211,107 +212,91 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-
-  const hamburger = document.getElementById("hamburger");
-  const navMenu = document.getElementById("nav-menu");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
-  });
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      hamburger.classList.remove("active");
-      navMenu.classList.remove("active");
-    });
-  });
 });
 
-   let currentSlide = 0;
-        const slides = document.querySelectorAll('.pricing-card');
-        const totalSlides = slides.length;
-        const slidesContainer = document.getElementById('slidesContainer');
-        if (slidesContainer) {
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+const slides = document.querySelectorAll('.pricing-card');
+const totalSlides = slides.length;
+const slidesContainer = document.getElementById('slidesContainer');
+if (slidesContainer) {
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dots = document.querySelectorAll('.dot');
 
-        function updateSlider() {
-            // Only apply transform on mobile/tablet
-            if (window.innerWidth < 1024) {
-                slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }
-            
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
+  function updateSlider() {
+    // Only apply transform on mobile/tablet
+    if (window.innerWidth < 1024) {
+      slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
 
-            // Update button states
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === totalSlides - 1;
-        }
+    // Update dots
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
 
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSlider();
-            }
-        }
+    // Update button states
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
 
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlider();
-            }
-        }
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateSlider();
+    }
+  }
 
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
-        }
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlider();
+    }
+  }
 
-        // Event listeners
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
+  function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    updateSlider();
+  }
 
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => goToSlide(index));
-        });
+  // Event listeners
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) {
-                slidesContainer.style.transform = 'none';
-            } else {
-                updateSlider();
-            }
-        });
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToSlide(index));
+  });
 
-        // Auto-slide functionality (optional)
-        setInterval(() => {
-            if (window.innerWidth < 1024) {
-                if (currentSlide < totalSlides - 1) {
-                    nextSlide();
-                } else {
-                    currentSlide = 0;
-                    updateSlider();
-                }
-            }
-        }, 5000); // Change slide every 5 seconds
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+      slidesContainer.style.transform = 'none';
+    } else {
+      updateSlider();
+    }
+  });
 
-        // Initialize
+  // Auto-slide functionality (optional)
+  setInterval(() => {
+    if (window.innerWidth < 1024) {
+      if (currentSlide < totalSlides - 1) {
+        nextSlide();
+      } else {
+        currentSlide = 0;
         updateSlider();
-        }
+      }
+    }
+  }, 5000); // Change slide every 5 seconds
 
-        // Add click handlers to CTA buttons
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                console.log(`Selected plan: ${planName}`);
-                // Add your form submission or redirect logic here
-                alert(`You selected the ${planName} plan! Redirecting to contact form...`);
-            });
-        });
+  // Initialize
+  updateSlider();
+}
+
+// Add click handlers to CTA buttons
+document.querySelectorAll('.cta-button').forEach(button => {
+  button.addEventListener('click', function () {
+    const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
+    console.log(`Selected plan: ${planName}`);
+    // Add your form submission or redirect logic here
+    alert(`You selected the ${planName} plan! Redirecting to contact form...`);
+  });
+});
