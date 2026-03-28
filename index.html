@@ -1093,11 +1093,20 @@ Hero Section -->
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
                 this.dots = document.querySelectorAll('.dot');
-                
+
+                this.isReady = !!(this.slidesContainer && this.prevBtn && this.nextBtn && this.dots.length);
+                if (!this.isReady) {
+                    return;
+                }
+
+                this.totalSlides = this.dots.length;
                 this.init();
             }
 
             init() {
+                if (!this.isReady) {
+                    return;
+                }
                 this.prevBtn.addEventListener('click', () => this.prevSlide());
                 this.nextBtn.addEventListener('click', () => this.nextSlide());
                 
@@ -1125,6 +1134,9 @@ Hero Section -->
             }
 
             updateSlider() {
+                if (!this.isReady) {
+                    return;
+                }
                 const translateX = -this.currentSlide * 100;
                 this.slidesContainer.style.transform = `translateX(${translateX}%)`;
                 
@@ -1137,6 +1149,9 @@ Hero Section -->
             }
 
             startAutoSlide() {
+                if (!this.isReady) {
+                    return;
+                }
                 setInterval(() => {
                     if (this.currentSlide < this.totalSlides - 1) {
                         this.nextSlide();
@@ -1158,11 +1173,15 @@ Hero Section -->
       let loadingBar = document.querySelector(".loading-bar");
       let mainContent = document.getElementById("main-content");
 
-      let masterTl = gsap.timeline({ defaults: { duration: 0.5, ease: "power2.inOut" } });
+      if (!textElement || !loadingBar) {
+        return;
+      }
+
+      let masterTl = gsap.timeline({ defaults: { duration: 0.35, ease: "power2.inOut" } });
 
       masterTl.to(loadingBar, {
         width: "100%",
-        duration: 7,
+        duration: 3,
         onUpdate: function () {
           let progress = loadingBar.offsetWidth / window.innerWidth;
           textElement.style.color = progress > 0.4 ? " #FFFFFF" : "#256c48";
@@ -1171,18 +1190,17 @@ Hero Section -->
 
       words.forEach((word, index) => {
         masterTl.to(textElement, {
-          duration: 0.5,
+          duration: 0.35,
           opacity: 1,
-          text: word,
           onStart: () => {
             textElement.innerText = word;
           }
-        }, index * 0.5);
+        }, index * 0.3);
 
         masterTl.to(textElement, {
-          duration: 0.5,
+          duration: 0.35,
           opacity: 0,
-        }, (index * 0.5) + 0.4);
+        }, (index * 0.3) + 0.25);
       });
 
       masterTl.to(".gsap-intro", {
@@ -1191,11 +1209,13 @@ Hero Section -->
         ease: "cubic-bezier(0.76, 0, 0.24, 1)",
       }, "-=0.5");
 
-      masterTl.to(mainContent, {
-        opacity: 1,
-        duration: 2,
-        ease: "power2.out",
-      }, "<");
+      if (mainContent) {
+        masterTl.to(mainContent, {
+          opacity: 1,
+          duration: 2,
+          ease: "power2.out",
+        }, "<");
+      }
     });
   </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
